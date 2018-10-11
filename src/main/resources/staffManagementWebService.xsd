@@ -1,0 +1,131 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://ikhramchenkov.com/staffmanagement/jaxb/"
+           xmlns:tns="http://ikhramchenkov.com/staffmanagement/jaxb/"
+           elementFormDefault="qualified">
+
+    <!--Получение сотрудников с фильтрацией по айди отдела или названию -->
+    <xs:element name="GetStaffRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="DepartmentId" type="xs:long" minOccurs="0"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="GetStaffResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Worker" type="tns:WorkerWithDepartmentEntity" minOccurs="0" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <!--Получение сотрудников с фильтрацией по айди отдела или названию -->
+
+    <!--CRUD работника-->
+    <xs:element name="AddWorkerRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Worker" type="tns:WorkerEntity"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="AddWorkerResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Id" type="xs:long" minOccurs="0"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="EditWorkerRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Worker" type="tns:WorkerEntity"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="EditWorkerResponse">
+        <xs:complexType>
+            <xs:sequence/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="DeleteWorkerRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Id" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="DeleteWorkerResponse">
+        <xs:complexType>
+            <xs:sequence/>
+        </xs:complexType>
+    </xs:element>
+    <!--CRUD работника-->
+
+    <!--Назначение сотрудника в отдел-->
+    <xs:element name="AssignWorkerRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="WorkerId" type="xs:long"/>
+                <xs:element name="DepartmentId" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="AssignWorkerResponse">
+        <xs:complexType>
+            <xs:sequence/>
+        </xs:complexType>
+    </xs:element>
+    <!--Назначение сотрудника в отдел-->
+
+    <!--Удаление сотрудника из отдела-->
+    <xs:element name="UnassignWorkerRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="WorkerId" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="UnassignWorkerResponse">
+        <xs:complexType>
+            <xs:sequence/>
+        </xs:complexType>
+    </xs:element>
+    <!--Удаление сотрудника из отдела-->
+
+    <!--Сотрудник-->
+    <xs:complexType name="WorkerEntity">
+        <xs:sequence>
+            <!--В зависимости от контекста можно не отправлять ID-->
+            <xs:element name="Id" type="xs:long" minOccurs="0"/>
+            <xs:element name="FirstName" type="xs:string"/>
+            <xs:element name="LastName" type="xs:string"/>
+            <xs:element name="PhoneNumber" type="xs:string" minOccurs="0"/>
+            <xs:element name="DepartmentId" type="xs:long" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="WorkerWithDepartmentEntity">
+        <xs:sequence>
+            <!--В зависимости от контекста можно не отправлять ID-->
+            <xs:element name="Id" type="xs:long" minOccurs="0"/>
+            <xs:element name="FirstName" type="xs:string"/>
+            <xs:element name="LastName" type="xs:string"/>
+            <xs:element name="PhoneNumber" type="xs:string" minOccurs="0"/>
+            <xs:element name="Department" type="tns:DepartmentEntity" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <!--Отдел-->
+    <xs:complexType name="DepartmentEntity">
+        <xs:sequence>
+            <xs:element name="Id" type="xs:long" minOccurs="0"/>
+            <xs:element name="Name" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>
