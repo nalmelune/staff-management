@@ -134,7 +134,22 @@ public class StaffManagementApplicationTests {
     }
 
     @Test
-    public void test10UnassignWorkerSuccess() {
+    public void test10GetStaffNoFilterSuccess() {
+        StringSource stringSource = new StringSource("<GetStaffRequest xmlns=\"http://ikhramchenkov.com/staffmanagement/jaxb/\">\n" +
+                "        </GetStaffRequest>");
+        mockClient.sendRequest(withPayload(stringSource)).andExpect(noFault());
+    }
+
+    @Test
+    public void test11GetStaffFilteredSuccess() {
+        StringSource stringSource = new StringSource("<GetStaffRequest xmlns=\"http://ikhramchenkov.com/staffmanagement/jaxb/\">\n" +
+                "            <DepartmentId>1</DepartmentId>\n" +
+                "        </GetStaffRequest>");
+        mockClient.sendRequest(withPayload(stringSource)).andExpect(noFault());
+    }
+
+    @Test
+    public void test12UnassignWorkerSuccess() {
         StringSource stringSource = new StringSource("<UnassignWorkerRequest xmlns=\"http://ikhramchenkov.com/staffmanagement/jaxb/\">\n" +
                 "            <WorkerId>1</WorkerId>\n" +
                 "        </UnassignWorkerRequest>");
@@ -142,25 +157,12 @@ public class StaffManagementApplicationTests {
     }
 
     @Test
-    public void test11UnassignWorkerAlreadyUnassignedFault() {
+    public void test13UnassignWorkerAlreadyUnassignedFault() {
         StringSource stringSource = new StringSource("<UnassignWorkerRequest xmlns=\"http://ikhramchenkov.com/staffmanagement/jaxb/\">\n" +
                 "            <WorkerId>1</WorkerId>\n" +
                 "        </UnassignWorkerRequest>");
         mockClient.sendRequest(withPayload(stringSource)).andExpect(serverOrReceiverFault());
     }
 
-    @Test
-    public void test12GetStaffNoFilterSuccess() {
-        StringSource stringSource = new StringSource("<GetStaffRequest xmlns=\"http://ikhramchenkov.com/staffmanagement/jaxb/\">\n" +
-                        "        </GetStaffRequest>");
-        mockClient.sendRequest(withPayload(stringSource)).andExpect(noFault());
-    }
 
-    @Test
-    public void test13GetStaffFilteredSuccess() {
-        StringSource stringSource = new StringSource("<GetStaffRequest xmlns=\"http://ikhramchenkov.com/staffmanagement/jaxb/\">\n" +
-                "            <DepartmentId>1</DepartmentId>\n" +
-                "        </GetStaffRequest>");
-        mockClient.sendRequest(withPayload(stringSource)).andExpect(noFault());
-    }
 }

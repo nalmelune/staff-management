@@ -9,14 +9,15 @@ import java.util.Set;
 public class Department {
     @Id
     @Column(name = "id")
-    @SequenceGenerator(name="departments_seq", sequenceName="DEPARTMENTS_SEQ")
+    @SequenceGenerator(name = "departments_seq", sequenceName = "DEPARTMENTS_SEQ")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "departments_seq")
     private Long id;
 
     @Column(name = "NAME")
     private String name;
 
-    @OneToMany
+    @OneToMany(targetEntity = Worker.class, cascade = CascadeType.DETACH)
+    @JoinColumn(name = "WORKERS")
     private Set<Worker> workers = new HashSet<>();
 
     public Long getId() {
@@ -48,7 +49,6 @@ public class Department {
         return "Department{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", workers=" + workers +
                 '}';
     }
 }

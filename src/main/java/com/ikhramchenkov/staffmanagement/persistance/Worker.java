@@ -4,6 +4,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "WORKERS")
+@NamedEntityGraph(name="withDepartment", attributeNodes = {@NamedAttributeNode("department")})
 public class Worker {
     @Id
     @Column(name = "id")
@@ -16,7 +17,7 @@ public class Worker {
     private String lastName;
     @Column(name = "PHONE_NUMBER")
     private String phoneNumber;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "DEPARTMENT_ID")
     private Department department;
 

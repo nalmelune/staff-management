@@ -48,13 +48,15 @@ public class StaffManagementEndpoint {
         } else {
             foundEntities = workerRepository.findAll();
         }
+
         GetStaffResponse response = objectFactory.createGetStaffResponse();
 
         for (Worker foundEntity : foundEntities) {
             WorkerWithDepartmentEntity workerWithDepartmentEntity = objectFactory.createWorkerWithDepartmentEntity();
             BeanUtils.copyProperties(foundEntity, workerWithDepartmentEntity);
             if (foundEntity.getDepartment() != null) {
-                BeanUtils.copyProperties(foundEntity.getDepartment(), workerWithDepartmentEntity.getDepartment());
+                workerWithDepartmentEntity.setDepartment(new DepartmentEntity());
+                BeanUtils.copyProperties(foundEntity.getDepartment(), workerWithDepartmentEntity.getDepartment(), "workers");
             }
             response.getWorker().add(workerWithDepartmentEntity);
         }
